@@ -1,12 +1,21 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
 const path = require('path');
 const mongoose = require('mongoose');
+const apiUrl = 'https://geobt81.com'; // Remplace par ton nom de domaine
 
-// Middleware
-app.use(cors());
-app.use(express.json());
+const app = express();
+
+// Middleware pour CORS
+const corsOptions = {
+  origin: 'https://geobt81.com', // Remplace par l'URL de ton frontend
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Méthodes autorisées
+  credentials: true, // Si tu utilises des cookies ou des sessions
+};
+
+// Utiliser CORS avec les options spécifiées
+app.use(cors(corsOptions));
+app.use(express.json()); // Middleware pour traiter les requêtes JSON
 
 const port = process.env.PORT || 3003;
 
@@ -14,7 +23,7 @@ const port = process.env.PORT || 3003;
 mongoose.connect('mongodb://localhost/live-events', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  serverSelectionTimeoutMS: 50000
+  serverSelectionTimeoutMS: 50000,
 }).then(() => {
   console.log('Connected to MongoDB');
 }).catch(err => {
@@ -33,13 +42,13 @@ const partnersRoutes = require('./routes/partnersRoutes');
 const socialMediaRoutes = require('./routes/socialMediaRoutes');
 
 // Utiliser les routes
-app.use('/news', newsRoutes);
+app.use('${apiUrl}/news', newsRoutes);
 app.use('/security', securityRoutes);
 app.use('/faq', faqRoutes);
 app.use('/groups', groupRoutes);
 app.use('/partners', partnersRoutes);
 app.use('/socialMedia', socialMediaRoutes);
-app.use('/billerie', billeterieRoutes);
+app.use('/billeterie', billeterieRoutes); // Corrigé de '/billerie' à '/billeterie'
 app.use('/imagesGroup', express.static(path.join(__dirname, 'data/imagesGroup')));
 
 // Middleware pour les routes de points d'intérêt
@@ -54,6 +63,7 @@ app.get('/', (req, res) => {
   res.send('Bienvenue sur l\'API du festival Live Events');
 });
 
+// Lancer le serveur
 app.listen(port, () => {
   console.log(`Le serveur tourne sur le port ${port}`);
 });

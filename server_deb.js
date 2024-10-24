@@ -1,9 +1,6 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 8080;
-
-// Middleware pour parser le JSON
-app.use(express.json());
+const port = process.env.PORT || 3000;
 
 // Route de base
 app.get('/', (req, res) => {

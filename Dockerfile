@@ -16,5 +16,6 @@ COPY . .
 # Exposer le port sur lequel votre application écoute
 EXPOSE 3000
 
+
 # Commande pour démarrer l'application
 CMD ["npm", "start"]

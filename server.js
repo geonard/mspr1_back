@@ -1,22 +1,10 @@
 const express = require('express');
 const app = express();
-const port = 3000;
-
-// Middleware pour parser le JSON
-app.use(express.json());
+const port = process.env.PORT || 3000;
 
 // Route de base
 app.get('/', (req, res) => {
   res.send('Hello World!');
-});
-
-// Route pour obtenir des données JSON
-app.get('/data', (req, res) => {
-  const data = {
-    message: "Hello from the backend!",
-    timestamp: new Date().toISOString()
-  };
-  res.json(data);
 });
 
 // Démarrer le serveur
